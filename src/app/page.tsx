@@ -9,7 +9,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import './page.module.css'
 import './styles.css'
 import Layout from '@/components/layout/Layout'
-import {geojson} from './geojson'
+import {geojson} from './geolocationData'
 
 const churchPopupHTML = ({
 	title,
@@ -89,6 +89,90 @@ export default function Map() {
 		map.addControl(geocoder)
 		map.addControl(new mapboxgl.NavigationControl())
 		map.addControl(new mapboxgl.GeolocateControl())
+
+		map.on('zoomend', e => {
+			const zoom = map.getZoom()
+
+			if (zoom >= 6) {
+				document.querySelectorAll('.mapboxgl-marker').forEach(marker => {
+					marker.classList.add('mapboxgl-marker-active')
+				})
+			}
+		})
+
+		map.on('zoom', e => {
+			const zoom = map.getZoom()
+
+			if (zoom < 6) {
+				document.querySelectorAll('.mapboxgl-marker').forEach(marker => {
+					marker.classList.remove('mapboxgl-marker-active')
+				})
+			}
+		})
+
+		map.on('load', () => {
+			map.addSource('earthquakes', {
+				type: 'geojson',
+				data: '/churches.geojson',
+				cluster: true,
+				clusterMaxZoom: 14, // Max zoom to cluster points on
+				clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+			})
+
+			map.addLayer({
+				id: 'clusters',
+				type: 'circle',
+				source: 'earthquakes',
+				filter: ['has', 'point_count'],
+				maxzoom: 14,
+				minzoom: 0,
+				paint: {
+					'circle-color': [
+						'step',
+						['get', 'point_count'],
+						'#eea028',
+						100,
+						'#d99124',
+						750,
+						'#bc7e21'
+					],
+					'circle-radius': [
+						'step',
+						['get', 'point_count'],
+						20,
+						100,
+						30,
+						750,
+						40
+					]
+				}
+			})
+
+			map.addLayer({
+				id: 'cluster-count',
+				type: 'symbol',
+				source: 'earthquakes',
+				filter: ['has', 'point_count'],
+				layout: {
+					'text-field': ['get', 'point_count_abbreviated'],
+					'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+					'text-size': 16
+				}
+			})
+
+			map.addLayer({
+				id: 'unclustered-point',
+				type: 'circle',
+				source: 'earthquakes',
+				filter: ['!', ['has', 'point_count']],
+				paint: {
+					'circle-color': '#eea028',
+					'circle-radius': 4,
+					'circle-stroke-width': 1,
+					'circle-stroke-color': '#eea028'
+				}
+			})
+		})
 	}, [])
 	return (
 		<Layout>
