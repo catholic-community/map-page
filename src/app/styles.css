@@ -75,3 +75,12 @@
 		width: 100%;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.mapboxgl-popup-content {
+		background-color: #1b1b1b !important;
+	}
+	.mapboxgl-popup-contact-container {
+		background-color: #2d2d2d;
+	}
+}
