@@ -19,6 +19,7 @@ import Mobile from './responsive/Mobile'
 import {User as UserIcon} from '@phosphor-icons/react'
 import {List as ListIcon} from '@phosphor-icons/react'
 import {SITE_URL} from '@/config'
+import Link from 'next/link'
 
 const Header = () => {
 	const [openMenu, setOpenMenu] = useState(false)
@@ -43,7 +44,9 @@ const Header = () => {
 			})}
 		>
 			<Box>
-				<LogoType direction="vertical" />
+				<Link href={SITE_URL}>
+					<LogoType direction="vertical" />
+				</Link>
 			</Box>
 			<MobileUp>
 				<Box sx={{display: 'flex', gap: 2}}>
