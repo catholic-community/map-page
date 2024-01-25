@@ -1,0 +1,38 @@
+.map {
+	width: 100%;
+	height: 100vh;
+}
+
+.geocoder {
+	position: absolute;
+	right: calc(50% - 250px);
+	top: 32px;
+	padding: 8px;
+	width: 500px;
+}
+
+.geocoder div,
+.geocoder input {
+	max-width: 100%;
+	width: 100%;
+	height: 50px;
+}
+
+.geocoder div svg {
+	top: 15px;
+}
+
+@media (max-width: 800px) {
+	.geocoder {
+		width: 100%;
+		height: 50px;
+		right: 0;
+		top: 0;
+	}
+
+	.geocoder div,
+	.geocoder input {
+		max-width: 100%;
+		width: 100%;
+	}
+}

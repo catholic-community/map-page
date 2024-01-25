@@ -2,11 +2,12 @@
 
 import React from 'react'
 import {useEffect} from 'react'
-import styles from './page.module.css'
 import mapboxgl from 'mapbox-gl'
 
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import './page.module.css'
+import './styles.css'
 
 export default function Home() {
 	useEffect(() => {
@@ -19,12 +20,23 @@ export default function Home() {
 			zoom: 1 // starting zoom
 		})
 
-		map.addControl(
-			new MapboxGeocoder({
-				accessToken: mapboxgl.accessToken,
-				mapboxgl: mapboxgl
-			})
-		)
+		const geocoder = new MapboxGeocoder({
+			accessToken: mapboxgl.accessToken,
+			mapboxgl: mapboxgl
+		})
+
+		map.addControl(geocoder)
+
+		const geocoderElement = document.getElementById('geocoder')
+
+		if (geocoderElement && geocoderElement.childElementCount === 0) {
+			geocoderElement.appendChild(geocoder.onAdd(map))
+		}
 	}, [])
-	return <div id="map" style={{width: '100%', height: '100vh'}}></div>
+	return (
+		<>
+			<div id="geocoder" className="geocoder" />
+			<div id="map" className="map" />
+		</>
+	)
 }
