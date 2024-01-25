@@ -12,6 +12,9 @@
     "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^5.0.2",
+    "install": "^0.13.0",
+    "mapbox-gl": "^3.1.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
@@ -19,12 +22,16 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.8.5",
     "@cloudflare/workers-types": "^4.20240117.0",
+    "@types/mapbox__mapbox-gl-geocoder": "^4.7.7",
+    "@types/mapbox-gl": "^2.7.19",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-plugin-next-on-pages": "^1.8.5",
+    "i": "^0.3.7",
+    "npm": "^10.4.0",
     "typescript": "^5",
     "vercel": "^33.2.0"
   }
