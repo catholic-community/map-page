@@ -13,14 +13,10 @@ import {geojson} from './geojson'
 
 const churchPopupHTML = ({
 	title,
-	address,
-	landlinePhone,
-	whatsApp
+	data
 }: {
 	title: string
-	address: string
-	landlinePhone?: string
-	whatsApp?: string
+	data: {value: string; label: string}[]
 }): string => `
 	<div>
 		<div class="mapboxgl-popup-header">
@@ -28,24 +24,14 @@ const churchPopupHTML = ({
 		</div>
 		<div class="mapboxgl-popup-body">
 			<div class="mapboxgl-popup-contact-container">
-				<div class="mapboxgl-popup-contact-item">
-					<h4>Endereço:</h4>
-					<p>${address}</p>
-				</div>
-				${
-					landlinePhone
-						? `<div class="mapboxgl-popup-contact-item"><h4>Telefone Fixo:</h4>
-								<p>${landlinePhone}</p>
-							</div>`
-						: ''
-				}
-				${
-					whatsApp
-						? `<div class="mapboxgl-popup-contact-item"><h4>WhatsApp:</h4>
-								<p>${whatsApp}</p>
-							</div>`
-						: ''
-				}
+				${data
+					.map(({label, value}) => {
+						return `<div class="mapboxgl-popup-contact-item">
+							<h4>${label}:</h4>
+							<div>${value}</div>
+						</div>`
+					})
+					.join('')}
 			</div>
 		</div>
 	</div>
@@ -95,14 +81,7 @@ export default function Map() {
 				.setLngLat(feature.geometry.coordinates)
 				.setPopup(
 					new mapboxgl.Popup({offset: 25}) // add popups
-						.setHTML(
-							churchPopupHTML({
-								title: feature.properties.title,
-								address: feature.properties.address,
-								landlinePhone: feature.properties.landlinePhone,
-								whatsApp: feature.properties.whatsApp
-							})
-						)
+						.setHTML(churchPopupHTML(feature.properties))
 				)
 				.addTo(map)
 		}
