@@ -1,5 +1,16 @@
 import {LngLatLike} from 'mapbox-gl'
 
+export const locations = [
+	{
+		lat: -23.676663,
+		lng: -45.448841
+	},
+	{
+		lat: -23.635775,
+		lng: -46.534713
+	}
+]
+
 export const geojson = {
 	type: 'FeatureCollection',
 	features: [
