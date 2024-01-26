@@ -69,14 +69,6 @@
 	min-width: 400px;
 }
 
-.mapboxgl-marker {
-	display: none;
-}
-
-.mapboxgl-marker-active {
-	display: block;
-}
-
 @media (max-width: 800px) {
 	.mapboxgl-ctrl-geocoder {
 		min-width: calc(100vw - 30px);
