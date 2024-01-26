@@ -9,7 +9,6 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import './page.module.css'
 import './styles.css'
 import Layout from '@/components/layout/Layout'
-import {geojson} from './geolocationData'
 
 const churchPopupHTML = ({
 	title,
@@ -67,48 +66,17 @@ export default function Map() {
 			const type = e.result.geometry.type
 			const placeName = e.result.place_name
 			console.log('result', e)
-		})
 
-		geocoder.on('clear', e => {
-			console.log('clear')
-		})
-
-		for (const feature of geojson.features) {
-			// make a marker for each feature and add to the map
-			new mapboxgl.Marker({
-				color: '#eea028'
-			})
-				.setLngLat(feature.geometry.coordinates)
-				.setPopup(
-					new mapboxgl.Popup({offset: 25}) // add popups
-						.setHTML(churchPopupHTML(feature.properties))
-				)
+			console.log(e.result.center)
+			geocoder.clear()
+			new mapboxgl.Marker({draggable: true})
+				.setLngLat(e.result.center)
 				.addTo(map)
-		}
+		})
 
 		map.addControl(geocoder)
 		map.addControl(new mapboxgl.NavigationControl())
 		map.addControl(new mapboxgl.GeolocateControl())
-
-		map.on('zoomend', e => {
-			const zoom = map.getZoom()
-
-			if (zoom >= 6) {
-				document.querySelectorAll('.mapboxgl-marker').forEach(marker => {
-					marker.classList.add('mapboxgl-marker-active')
-				})
-			}
-		})
-
-		map.on('zoom', e => {
-			const zoom = map.getZoom()
-
-			if (zoom < 6) {
-				document.querySelectorAll('.mapboxgl-marker').forEach(marker => {
-					marker.classList.remove('mapboxgl-marker-active')
-				})
-			}
-		})
 
 		map.on('load', () => {
 			map.addSource('earthquakes', {
@@ -160,16 +128,46 @@ export default function Map() {
 				}
 			})
 
-			map.addLayer({
-				id: 'unclustered-point',
-				type: 'circle',
-				source: 'earthquakes',
-				filter: ['!', ['has', 'point_count']],
-				paint: {
-					'circle-color': '#eea028',
-					'circle-radius': 4,
-					'circle-stroke-width': 1,
-					'circle-stroke-color': '#eea028'
+			map.loadImage('/marker.png', (error, image) => {
+				if (error) {
+					throw error
+				}
+
+				if (image) {
+					map.addImage('unclustered-marker', image)
+
+					map.addLayer({
+						id: 'unclustered-point',
+						type: 'symbol',
+						source: 'earthquakes',
+						filter: ['!', ['has', 'point_count']],
+						layout: {
+							'icon-image': 'unclustered-marker',
+							'icon-size': 0.15,
+							'icon-allow-overlap': true
+						}
+					})
+				}
+			})
+
+			map.on('click', 'unclustered-point', function (e) {
+				if (e.features && e.features[0].properties) {
+					// make a marker for each feature and add to the map
+					const properties = e.features[0].properties as {
+						title: string
+						data: string
+					}
+
+					const title = properties.title
+					const data = JSON.parse(properties.data) as {
+						label: string
+						value: string
+					}[]
+
+					new mapboxgl.Popup({offset: 25})
+						.setLngLat([e.lngLat.lng, e.lngLat.lat])
+						.setHTML(churchPopupHTML({title, data}))
+						.addTo(map)
 				}
 			})
 		})
