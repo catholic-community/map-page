@@ -56,6 +56,34 @@
 					}
 				]
 			}
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [-46.535612512495135, -23.61795299100352]
+			},
+			"properties": {
+				"title": "Paróquia Santa Maria Goretti",
+				"data": [
+					{
+						"label": "Confissões",
+						"value": "<p>Sob agendamento</p>"
+					},
+					{
+						"label": "Horário de Missas",
+						"value": "<p>Terça-feira: 19:30</p><p>Quinta-feira: 19:00</p><p>Sábado: 16:00</p><p>Domingo: 07:30 / 10:30 / 18:30</p>"
+					},
+					{
+						"label": "Endereço",
+						"value": "<p>Avenida Nova Iorque, Vila Metalúrgica, Santo André - São Paulo, 09220, Brasil</p>"
+					},
+					{
+						"label": "WhatsApp",
+						"value": "<p>+55 11 93249-1212</p>"
+					}
+				]
+			}
 		}
 	]
 }
