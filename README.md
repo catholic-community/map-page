@@ -4,6 +4,7 @@
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-funcionalidades">Funcionalidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-saiba-mais">Saiba mais</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-licença">Licença</a>
 </p>
@@ -34,6 +35,14 @@ marcadores individuais.
 - Instale as dependências com `npm install`
 - Inicie o servidor com `npm run dev`
 - Acesse [`localhost:3001`](http://localhost:3001) no seu navegador
+
+## ⚙️ Funcionalidades
+
+- [ ] Cadastrar novas igrejas
+- [ ] Adicionar informações sobre as igrejas
+- [ ] Adicionar informações sobre os horários de missa
+- [ ] Adicionar informações sobre os horários de confissão
+- [ ] Adicionar informações sobre os eventos
 
 ## ⚡️ Saiba mais
 
