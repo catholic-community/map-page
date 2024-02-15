@@ -18,7 +18,7 @@ import MobileUp from './responsive/MobileUp'
 import Mobile from './responsive/Mobile'
 import {User as UserIcon} from '@phosphor-icons/react'
 import {List as ListIcon} from '@phosphor-icons/react'
-import {SITE_URL} from '@/config'
+import {AUTH_URL, SITE_URL} from '@/config'
 import Link from 'next/link'
 
 const Header = () => {
@@ -52,13 +52,13 @@ const Header = () => {
 				<Box sx={{display: 'flex', gap: 2}}>
 					<Button
 						variant="contained"
-						onClick={() => window.open(SITE_URL + '/sign-up', '_blank')}
+						onClick={() => window.open(AUTH_URL + '/sign-up', '_blank')}
 					>
 						{'Cadastre-se'}
 					</Button>
 					<Button
 						startIcon={<UserIcon />}
-						onClick={() => window.open(SITE_URL + '/login', '_blank')}
+						onClick={() => window.open(AUTH_URL, '_blank')}
 					>
 						{'Entrar'}
 					</Button>
@@ -78,15 +78,13 @@ const Header = () => {
 					<List>
 						<ListItem disablePadding>
 							<ListItemButton
-								onClick={() => window.open(SITE_URL + '/sign-up', '_blank')}
+								onClick={() => window.open(AUTH_URL + '/sign-up', '_blank')}
 							>
 								<ListItemText primary={'Cadastre-se'} />
 							</ListItemButton>
 						</ListItem>
 						<ListItem disablePadding>
-							<ListItemButton
-								onClick={() => window.open(SITE_URL + '/login', '_blank')}
-							>
+							<ListItemButton onClick={() => window.open(AUTH_URL, '_blank')}>
 								<ListItemText primary={'Entrar'} />
 							</ListItemButton>
 						</ListItem>
